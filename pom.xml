@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 定义项目对象模型(POM)，用于描述Maven项目 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <!-- POM模型版本 -->
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- 项目坐标，唯一标识项目 -->
+  <groupId>io.github.lystrosaurus</groupId>
+  <artifactId>druid-metrics-spring-boot-starter</artifactId>
+  <version>0.0.1</version>
+
+  <!-- 定义项目父POM，继承自Spring Boot -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.7.18</version>
+  </parent>
+
+  <!-- 项目元数据 -->
+  <name>druid-metrics-spring-boot-starter</name>
+  <description>简单处理Druid监控数据</description>
+  <url>https://github.com/lystrosaurus/druid-metrics-spring-boot-starter</url>
+
+  <!-- 构建属性，指定Java版本 -->
+  <properties>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+    <druid-version>1.2.24</druid-version>
+  </properties>
+
+  <!-- 项目使用的仓库 -->
+  <repositories>
+
+  </repositories>
+
+  <!-- 项目依赖 -->
+  <dependencies>
+    <!-- Spring Boot自动配置 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+    <!-- Spring Boot配置处理器，可选依赖 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid-spring-boot-starter</artifactId>
+      <version>${druid-version}</version>
+    </dependency>
+
+
+  </dependencies>
+
+  <!-- 源代码管理(SCM)信息 -->
+  <scm>
+    <url>https://github.com/lystrosaurus/druid-metrics-spring-boot-starter</url>
+    <connection>scm:git@github.com:lystrosaurus/druid-metrics-spring-boot-starter.git</connection>
+    <developerConnection>scm:git@github.com:lystrosaurus/druid-metrics-spring-boot-starter.git
+    </developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <!-- 开发者信息 -->
+  <developers>
+    <developer>
+      <email>opabinia@126.com</email>
+      <url>https://github.com/lystrosaurus/druid-metrics-spring-boot-starter</url>
+    </developer>
+  </developers>
+
+  <!-- 项目许可证 -->
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <!-- 项目构建配置 -->
+  <build>
+    <plugins>
+      <!-- Maven打包插件 -->
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+      </plugin>
+      <!-- Maven源码插件，附加源码到发布包 -->
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Maven Java文档插件，附加JavaDoc到发布包 -->
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <quiet>true</quiet>
+          <notimestamp>true</notimestamp>
+          <encoding>UTF-8</encoding>
+          <docencoding>UTF-8</docencoding>
+          <charset>UTF-8</charset>
+          <additionalOptions>
+            <additionalOption>-XDignore.symbol.file</additionalOption>
+            <additionalOption>-Xdoclint:-html</additionalOption>
+          </additionalOptions>
+          <linksource>true</linksource>
+          <source>${java.specification.version}</source>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-docs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Gpg签名插件，对发布包进行签名 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <id>oss</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Sonatype Central发布插件 -->
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.7.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>central</publishingServerId>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
